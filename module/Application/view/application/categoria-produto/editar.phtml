@@ -1,0 +1,18 @@
+<div class="col-12 pt-2 pt-md-3">
+    <h2>Editar categoria</h2> 
+    
+    <?php 
+        $form->setAttribute('action', $this->url('categoria/default', array('action' => 'editar', 'id'=> $categoriaId)));
+        echo $this->form()->openTag($form); ?> 
+        <div class="col-md-12 form-group">
+                <?php echo $this->formLabel($this->form->get('nomeCategoria')); ?>
+                <?php echo $this->formElement($form->get('nomeCategoria')); ?>
+                
+        </div>
+        <div class="col-md-12 form-group">
+            <?php echo $this->formElement($form->get('submitForm')); ?>
+        </div>
+     <?php   echo $this->form()->closeTag(); ?>
+    
+</div>  
+  

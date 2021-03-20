@@ -1,0 +1,103 @@
+<div class="col-12 pt-2 pt-md-3">
+    <h2>Produtos</h2>
+    
+    <div id="server-messages">
+    <?php
+    print $this->flashMessenger()->render('error', array('alert', 'alert-dismissable', 'alert-danger', 'ul-msg'));
+    print $this->flashMessenger()->render('info', array('alert', 'alert-dismissable', 'alert-info', 'ul-msg'));
+    print $this->flashMessenger()->render('warning', array('alert', 'alert-dismissable', 'alert-warning', 'ul-msg'));
+    print $this->flashMessenger()->render('success', array('alert', 'alert-dismissable', 'alert-success', 'ul-msg'));        
+    ?> 
+    </div>
+       
+    <a  class="btn btn-secondary float-right mb-3" href="<?=$this->url('produto/default', array('action' => 'cadastrar')) ?>"><i class="fas fa-plus"></i></i>&nbsp;Novo</a>
+    <table class="table table-produtos" >
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Data Cadastro</th>
+            <th scope="col">Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php 
+                foreach( $produtos as $produto){ ?>
+                    <tr>
+                      <th scope="row"><?=$produto->getIdProduto(); ?></th>           
+                      <td><?=$produto->getNomeProduto(); ?></td> 
+                      <td><?=$produto->getIdCategoriaProduto()->getNomeCategoria(); ?></td> 
+                      <td>R$<?=number_format($produto->getValorProduto(), 2, ',', '.') ?></td> 
+                      <td><?=$produto->getDataCadastro()->format('d/m/Y'); ?></td> 
+                      <th scope="col">
+                          <a href="<?=$this->url('produto/default', array('action' => 'editar', "id" => $produto->getIdProduto())) ?>" class="link-editar" title="Editar produto"><i class="far fa-edit"></i></a>&nbsp;                         
+                          <a href="javascript:void(null)"  onclick="confirmaExclusao(<?=$produto->getIdProduto()?>)" class="link-excluir" title="Excluir produto"><i class="far fa-trash-alt"></i></a>
+                           
+                      </th>
+                    </tr>
+          <?php } ?>
+        </tbody>
+    </table>
+    
+</div>
+
+<div class="modal" id="modalAviso" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Atenção</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Esta categoria não pode ser excluída pois possue produtos associados a mesma. Considere excluí-los antes.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" id="modalExcluir" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Atenção</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Deseja realmente excluir este produto?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-id="14" class="btn btn-primary acao">Sim</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>        
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">    
+   $(document).ready(function(){
+      setTimeout(function() {
+            $('#server-messages').fadeOut('300');
+        }, 3000); 
+   });
+   
+   function confirmaExclusao(id){ 
+      $("#modalExcluir").find(".acao").data("id", id);
+      $('#modalExcluir').modal('show');
+   }
+  
+  $("#modalExcluir").on("click", ".acao", function(){
+      $('#modalExcluir').modal('hide');
+      id = $("#modalExcluir").find(".acao").data("id");
+      window.location.href = '/produto/excluir/'+id;
+  });
+    
+</script>
+  

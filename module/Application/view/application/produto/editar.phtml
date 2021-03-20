@@ -1,0 +1,29 @@
+<div class="col-12 pt-2 pt-md-3">
+    <h2>Editar produto</h2>   
+    <?php 
+        $form->setAttribute('action', $this->url('produto/default', array('action' => 'editar', 'id'=> $produtoId)));
+        echo $this->form()->openTag($form); ?> 
+         <div class="col-md-6 form-group">
+                <?php echo $this->formLabel($this->form->get('nomeProduto')); ?>
+                <?php echo $this->formElement($form->get('nomeProduto')); ?>                
+        </div>
+        <div class="col-md-6 form-group">
+                <?php echo $this->formLabel($this->form->get('idCategoriaProduto')); ?>
+                <?php echo $this->formElement($form->get('idCategoriaProduto')); ?>                
+        </div>
+        <div class="col-md-6 form-group">
+                <?php echo $this->formLabel($this->form->get('valorProduto')); ?>
+                <?php echo $this->formElement($form->get('valorProduto')); ?>                
+        </div>
+        <div class="col-md-12 form-group">
+            <?php echo $this->formElement($form->get('submitForm')); ?>
+        </div>
+     <?php   echo $this->form()->closeTag(); ?>
+    
+</div> 
+<script type="text/javascript">    
+   $(document).ready(function(){
+        jQuery(".money-real").maskMoney({prefix: 'R$ ', allowNegative: true, thousands: '.', decimal: ',', affixesStay: false});
+    });   
+</script>
+  
